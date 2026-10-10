@@ -75,14 +75,14 @@ class WC_Stellar_Settings
                 'desc_tip'    => true,
             ],
             'network'        => [
-                'title'   => __('Network', 'woo-pay'),
+                'title'   => __('Network (Testnet / Mainnet)', 'woo-pay'),
                 'type'    => 'select',
                 'options' => [
                     'testnet' => __('Testnet (for testing)', 'woo-pay'),
                     'public'  => __('Mainnet / Public (real money)', 'woo-pay'),
                 ],
                 'default'     => 'testnet',
-                'description' => __('Use testnet while setting up, then switch to public for live sales.', 'woo-pay'),
+                'description' => __('Testnet payments are only for testing and have no real monetary value. Switch to Mainnet / Public for live sales; checkout displays a warning while Testnet is selected.', 'woo-pay'),
                 'desc_tip'    => true,
             ],
             'usdc_issuer'    => [

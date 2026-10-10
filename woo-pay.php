@@ -63,6 +63,13 @@ function woo_pay_enqueue_checkout_js(): void
         return;
     }
 
+    wp_enqueue_style(
+        'woo-pay-checkout',
+        WOO_PAY_URL . 'assets/checkout.css',
+        [],
+        WOO_PAY_VERSION
+    );
+
     wp_enqueue_script(
         'woo-pay-checkout',
         WOO_PAY_URL . 'assets/checkout.js',

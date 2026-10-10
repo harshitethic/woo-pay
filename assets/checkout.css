@@ -1,0 +1,18 @@
+/* Prominent warning for simulated Stellar payments (real-value assets must not be sent). */
+.woo-pay-testnet-warning {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+    margin: 1rem 0;
+    padding: 1rem 1.2rem;
+    border: 2px solid #b42318;
+    border-radius: .4rem;
+    background: #fff1f0;
+    color: #7a1b16;
+    line-height: 1.5;
+}
+.woo-pay-testnet-warning strong {
+    font-weight: 800;
+    font-size: 1.05em;
+}

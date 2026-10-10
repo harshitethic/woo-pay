@@ -42,6 +42,17 @@ final class WcGatewayStellarTest extends TestCase
         $this->assertStringContainsString('Invalid Stellar wallet address', WC_Admin_Settings::$errors[0]);
     }
 
+    public function test_testnet_warning_only_renders_on_testnet(): void
+    {
+        $warning = WC_Gateway_Stellar::network_warning_html('testnet');
+
+        $this->assertStringContainsString('TESTNET', $warning);
+        $this->assertStringContainsString('role="alert"', $warning);
+        $this->assertStringContainsString('woo-pay-testnet-warning', $warning);
+        $this->assertSame('', WC_Gateway_Stellar::network_warning_html('public'));
+        $this->assertSame('', WC_Gateway_Stellar::network_warning_html(''));
+    }
+
     public function test_valid_address_is_accepted_without_error(): void
     {
         $gateway = (new ReflectionClass(WC_Gateway_Stellar::class))->newInstanceWithoutConstructor();

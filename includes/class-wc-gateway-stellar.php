@@ -84,6 +84,23 @@ class WC_Gateway_Stellar extends WC_Payment_Gateway
     }
 
     /**
+     * Render a clearly labelled testnet warning without using inline styles.
+     * The order's saved network is used on the thank-you page so a later
+     * merchant settings change cannot hide a historical testnet warning.
+     */
+    public static function network_warning_html(string $network): string
+    {
+        if ($network !== 'testnet') {
+            return '';
+        }
+
+        return '<div class="woo-pay-testnet-warning" role="alert">'
+            . '<strong>' . esc_html__('TESTNET — not real money', 'woo-pay') . '</strong>'
+            . '<span>' . esc_html__('Testnet payments do not transfer real XLM or USDC. Only send testnet assets on this page.', 'woo-pay') . '</span>'
+            . '</div>';
+    }
+
+    /**
      * Show payment fields at checkout (address, asset, memo hint).
      */
     public function payment_fields(): void
@@ -92,6 +109,7 @@ class WC_Gateway_Stellar extends WC_Payment_Gateway
         if ($desc) {
             echo '<p>' . esc_html($desc) . '</p>';
         }
+        echo self::network_warning_html($this->network);
         echo '<div class="woo-pay-stellar-box" data-asset="' . esc_attr($this->asset) . '">';
         echo '<p><strong>' . esc_html__('Send to:', 'woo-pay') . '</strong> ';
         echo '<code class="woo-pay-address">' . esc_html($this->wallet_address ?: __('(shop wallet not set yet)', 'woo-pay')) . '</code> ';
@@ -172,6 +190,7 @@ class WC_Gateway_Stellar extends WC_Payment_Gateway
         $total   = $order->get_total();
 
         echo '<section class="woo-pay-instructions"><h2>' . esc_html__('Pay with Stellar', 'woo-pay') . '</h2>';
+        echo self::network_warning_html((string) ($order->get_meta('_stellar_network') ?: $this->network));
         echo '<ol>';
         echo '<li>' . sprintf(
             /* translators: 1: amount 2: asset 3: address */
