@@ -9,22 +9,39 @@
   'use strict';
 
   function copyText(text, btn) {
-    var done = function () {
-      var original = btn.textContent;
-      var label = (window.WooPayStellar && window.WooPayStellar.copied) || 'Copied!';
-      btn.textContent = label;
+    var original = btn.textContent;
+    function showResult(ok) {
+      var labels = window.WooPayStellar || {};
+      btn.textContent = ok ? (labels.copied || 'Copied!') : (labels.copyFailed || 'Copy failed');
       setTimeout(function () { btn.textContent = original; }, 1500);
-    };
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(done, done);
-    } else {
+    }
+
+    function fallbackCopy() {
       var ta = document.createElement('textarea');
       ta.value = text;
       document.body.appendChild(ta);
       ta.select();
-      try { document.execCommand('copy'); } catch (e) { /* ignore */ }
+      var copied = false;
+      try {
+        copied = document.execCommand('copy');
+      } catch (e) { /* Not all browsers support the legacy command. */ }
       document.body.removeChild(ta);
-      done();
+      showResult(Boolean(copied));
+    }
+
+    if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+      try {
+        // If the modern clipboard is blocked, try the legacy path rather than
+        // announcing success for a copy that never happened.
+        Promise.resolve(navigator.clipboard.writeText(text)).then(
+          function () { showResult(true); },
+          fallbackCopy
+        );
+      } catch (e) {
+        fallbackCopy();
+      }
+    } else {
+      fallbackCopy();
     }
   }
 
