@@ -14,3 +14,72 @@
     outline: 2px solid currentColor;
     outline-offset: 2px;
 }
+
+/*
+ * Keep Stellar instructions readable without overriding checkout theme colors
+ * or the theme's native WooCommerce .button presentation.
+ */
+.woo-pay-stellar-box,
+.woo-pay-instructions {
+    box-sizing: border-box;
+    max-width: 100%;
+    margin-block: 1em;
+    padding: 1em;
+    border: 1px solid currentColor;
+    border-radius: 0.4em;
+    color: inherit;
+    line-height: 1.55;
+}
+
+.woo-pay-stellar-box p,
+.woo-pay-instructions li {
+    margin-block: 0.6em;
+}
+
+.woo-pay-instructions ol {
+    margin: 0;
+    padding-inline-start: 1.5em;
+}
+
+.woo-pay-stellar-box code,
+.woo-pay-instructions code {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    white-space: normal;
+    font-size: 0.9em;
+}
+
+.woo-pay-stellar-box .woo-pay-copy,
+.woo-pay-instructions .woo-pay-copy,
+.woo-pay-instructions .woo-pay-copy-memo {
+    display: inline-block;
+    margin-inline-start: 0.5em;
+    margin-block: 0.25em;
+    vertical-align: middle;
+    max-width: 100%;
+    cursor: pointer;
+}
+
+/* The browser focus ring should not disappear under a theme's button reset. */
+.woo-pay-stellar-box .woo-pay-copy:focus-visible,
+.woo-pay-instructions .woo-pay-copy:focus-visible,
+.woo-pay-instructions .woo-pay-copy-memo:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+}
+
+.woo-pay-instructions .woo-pay-status {
+    margin-block-start: 1em;
+    overflow-wrap: anywhere;
+}
+
+@media (max-width: 480px) {
+    .woo-pay-stellar-box,
+    .woo-pay-instructions {
+        padding: 0.75em;
+    }
+
+    .woo-pay-instructions ol {
+        padding-inline-start: 1.25em;
+    }
+}
