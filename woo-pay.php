@@ -81,6 +81,7 @@ function woo_pay_enqueue_checkout_js(): void
     // Pass translated strings to JS.
     wp_localize_script('woo-pay-checkout', 'WooPayStellar', [
         'copied'      => __('Copied!', 'woo-pay'),
+        'copyFailed'  => __('Copy failed. Please select and copy the text manually.', 'woo-pay'),
         'copy'        => __('Copy', 'woo-pay'),
         'paid'        => __('Payment received. Thank you!', 'woo-pay'),
         'checkFailed' => __('We could not check your payment just now. We will try again shortly.', 'woo-pay'),
